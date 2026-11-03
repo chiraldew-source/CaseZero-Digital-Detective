@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CASE ZERO | Digital Detective</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .verdict-panel {
+            margin-top: 35px;
+            padding: 30px;
+            background: #111722;
+            border: 1px solid #ff465b;
+            border-radius: 14px;
+        }
+
+        .verdict-panel h2 {
+            color: #ff465b;
+            margin-bottom: 15px;
+        }
+
+        .verdict-panel p {
+            color: #aeb9cb;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .verdict-panel label {
+            display: block;
+            margin: 18px 0 9px;
+            font-weight: bold;
+        }
+
+        .verdict-panel select {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #1c2533;
+            color: white;
+            border: 1px solid #394657;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .verdict-panel button {
+            margin-top: 22px;
+            margin-right: 10px;
+        }
+
+        #finalResult {
+            margin-top: 25px;
+            padding: 24px;
+            background: #1b2633;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        #finalResult h2 {
+            margin-bottom: 12px;
+        }
+
+        .file-detail {
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #1a2230;
+            border-left: 3px solid #ff465b;
+            border-radius: 5px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        CASE<span>ZERO</span>
+    </div>
+
+    <div class="case-status">
+        <span class="status-dot"></span>
+        CLASSIFIED INVESTIGATION
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <p class="eyebrow">
+            DIGITAL FORENSICS DIVISION // CASE 001
+        </p>
+
+        <h1>
+            THE MIDNIGHT <span>BREACH</span>
+        </h1>
+
+        <p class="description">
+            A confidential file vanished from the
+            university server at 11:59 PM.
+
+            Three suspects. Five clues.
+            One hidden truth.
+
+            Can you solve the case?
+        </p>
+
+        <button id="startBtn">
+            BEGIN INVESTIGATION →
+        </button>
+    </section>
+
+    <section class="case-panel">
+
+        <div class="panel-heading">
+            <h2>CLASSIFIED CASE FILE</h2>
+            <span class="tag">TOP SECRET</span>
+        </div>
+
+        <div class="case-details">
+
+            <div>
+                <small>CASE ID</small>
+                <strong>#CZ-001</strong>
+            </div>
+
+            <div>
+                <small>INCIDENT TIME</small>
+                <strong>23:59 HOURS</strong>
+            </div>
+
+            <div>
+                <small>SUSPECTS</small>
+                <strong>03 IDENTIFIED</strong>
+            </div>
+
+            <div>
+                <small>STATUS</small>
+                <strong class="red" id="caseStatus">
+                    UNSOLVED
+                </strong>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="investigation"
+             class="investigation hidden">
+
+        <div class="section-heading">
+            <h2>INVESTIGATION TERMINAL</h2>
+            <p>
+                Examine all three case files before
+                making your accusation.
+            </p>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <article class="investigation-card"
+                     data-file="evidence"
+                     role="button"
+                     tabindex="0">
+
+                <div class="card-icon">📁</div>
+                <h3>Evidence Locker</h3>
+
+                <p>
+                    Search through five forensic clues.
+                </p>
+
+                <span>OPEN EVIDENCE →</span>
+            </article>
+
+            <article class="investigation-card"
+                     data-file="suspects"
+                     role="button"
+                     tabindex="0">
+
+                <div class="card-icon">👤</div>
+                <h3>Suspect Profiles</h3>
+
+                <p>
+                    Analyze three suspects and their alibis.
+                </p>
+
+                <span>VIEW SUSPECTS →</span>
+            </article>
+
+            <article class="investigation-card"
+                     data-file="timeline"
+                     role="button"
+                     tabindex="0">
+
+                <div class="card-icon">🕒</div>
+                <h3>Incident Timeline</h3>
+
+                <p>
+                    Reconstruct the sequence of events.
+                </p>
+
+                <span>VIEW TIMELINE →</span>
+            </article>
+
+        </div>
+
+        <div class="system-message"
+             id="statusMessage">
+            SYSTEM READY: Awaiting investigator.
+        </div>
+
+        <div id="fileDetails"
+             class="case-panel hidden"
+             style="margin-top:25px;">
+        </div>
+
+        <!-- FINAL ACCUSATION -->
+
+        <section id="verdict"
+                 class="verdict-panel hidden">
+
+            <h2>⚖️ FINAL ACCUSATION</h2>
+
+            <p>
+                You have examined the evidence.
+                Identify the person responsible for
+                the missing confidential file.
+            </p>
+
+            <label for="suspectChoice">
+                WHO COMMITTED THE BREACH?
+            </label>
+
+            <select id="suspectChoice">
+                <option value="">
+                    Select your suspect
+                </option>
+                <option value="asha">Asha</option>
+                <option value="rohan">Rohan</option>
+                <option value="mira">Mira</option>
+            </select>
+
+            <label for="clueChoice">
+                WHICH EVIDENCE SUPPORTS YOUR ACCUSATION?
+            </label>
+
+            <select id="clueChoice">
+                <option value="">
+                    Select your strongest evidence
+                </option>
+
+                <option value="credentials">
+                    Mira's username was used
+                </option>
+
+                <option value="physical">
+                    Maintenance card and USB device records
+                </option>
+
+                <option value="time">
+                    The export happened at 11:59 PM
+                </option>
+            </select>
+
+            <button id="submitVerdict">
+                SUBMIT FINAL VERDICT
+            </button>
+
+            <button id="resetBtn" type="button">
+                PLAY AGAIN
+            </button>
+
+            <div id="finalResult" class="hidden"
+                 aria-live="polite">
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+<footer>
+    CASE ZERO // DIGITAL INVESTIGATION SYSTEM // V2.0
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const startBtn =
+        document.getElementById("startBtn");
+
+    const investigation =
+        document.getElementById("investigation");
+
+    const statusMessage =
+        document.getElementById("statusMessage");
+
+    const fileDetails =
+        document.getElementById("fileDetails");
+
+    const verdict =
+        document.getElementById("verdict");
+
+    const finalResult =
+        document.getElementById("finalResult");
+
+    const caseStatus =
+        document.getElementById("caseStatus");
+
+    const submitVerdict =
+        document.getElementById("submitVerdict");
+
+    const resetBtn =
+        document.getElementById("resetBtn");
+
+    // FICTIONAL CASE DATABASE
+
+    const caseFiles = {
+
+        evidence: {
+            title: "EVIDENCE LOCKER",
+            clues: [
+                "EVIDENCE 01: Asha's exit badge was scanned at 11:40 PM. No return entry was recorded.",
+
+                "EVIDENCE 02: At 11:51 PM, Lab PC-07 was unlocked using Mira's administrator account.",
+
+                "EVIDENCE 03: At 11:57 PM, maintenance card MT-14 opened the secure server room.",
+
+                "EVIDENCE 04: At 11:59 PM, the missing file was exported to USB device RK-17.",
+
+                "EVIDENCE 05: Inventory records show that both maintenance card MT-14 and USB RK-17 were issued to Rohan."
+            ]
+        },
+
+        suspects: {
+            title: "SUSPECT PROFILES",
+            clues: [
+                "SUSPECT 01 — ASHA: Research assistant. Claims she left at 11:40 PM. Exit records support her statement.",
+
+                "SUSPECT 02 — ROHAN: IT technician. Claims he was repairing a router in another building. No maintenance ticket was recorded for that period.",
+
+                "SUSPECT 03 — MIRA: Administrator. Her account was used during the breach, but a recorded online meeting places her elsewhere from 11:45 PM until midnight."
+            ]
+        },
+
+        timeline: {
+            title: "INCIDENT TIMELINE",
+            clues: [
+                "11:40 PM — Asha leaves the university building.",
+
+                "11:45 PM — Mira begins her recorded online meeting.",
+
+                "11:51 PM — PC-07 login using Mira's credentials.",
+
+                "11:57 PM — Maintenance card MT-14 accesses the server room.",
+
+                "11:59 PM — Confidential file exported to USB RK-17."
+            ]
+        }
+    };
+
+    const openedFiles = new Set();
+    let verdictSubmitted = false;
+
+    // START GAME
+
+    startBtn.addEventListener("click", () => {
+
+        investigation.classList.remove("hidden");
+
+        startBtn.disabled = true;
+        startBtn.textContent = "INVESTIGATION ACTIVE";
+
+        statusMessage.textContent =
+            "SYSTEM ONLINE: Begin examining case files.";
+
+        investigation.scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
+    // OPEN CASE FILES
+
+    document.querySelectorAll("[data-file]")
+        .forEach(card => {
+
+        const openFile = () => {
+
+            const fileType = card.dataset.file;
+            const data = caseFiles[fileType];
+
+            openedFiles.add(fileType);
+
+            fileDetails.replaceChildren();
+
+            const heading =
+                document.createElement("h2");
+
+            heading.textContent = data.title;
+            heading.style.color = "#ff465b";
+            heading.style.marginBottom = "20px";
+
+            fileDetails.appendChild(heading);
+
+            data.clues.forEach(clue => {
+
+                const item =
+                    document.createElement("p");
+
+                item.className = "file-detail";
+                item.textContent = clue;
+
+                fileDetails.appendChild(item);
+            });
+
+            fileDetails.classList.remove("hidden");
+
+            statusMessage.textContent =
+                "FILES EXAMINED: " +
+                openedFiles.size + "/3";
+
+            if (openedFiles.size === 3) {
+
+                verdict.classList.remove("hidden");
+
+                statusMessage.textContent =
+                    "ALL CASE FILES EXAMINED. FINAL ACCUSATION UNLOCKED.";
+            }
+
+            fileDetails.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        };
+
+        card.addEventListener("click", openFile);
+
+        card.addEventListener("keydown", event => {
+
+            if (event.key === "Enter" ||
+                event.key === " ") {
+
+                event.preventDefault();
+                openFile();
+            }
+        });
+    });
+
+    // SUBMIT VERDICT
+
+    submitVerdict.addEventListener("click", () => {
+
+        if (verdictSubmitted) return;
+
+        const suspect =
+            document.getElementById("suspectChoice").value;
+
+        const evidence =
+            document.getElementById("clueChoice").value;
+
+        if (!suspect || !evidence) {
+            alert("Select both a suspect and supporting evidence.");
+            return;
+        }
+
+        let score = 0;
+
+        if (suspect === "rohan") {
+            score += 60;
+        }
+
+        if (evidence === "physical") {
+            score += 40;
+        }
+
+        finalResult.replaceChildren();
+
+        const title =
+            document.createElement("h2");
+
+        const explanation =
+            document.createElement("p");
+
+        const points =
+            document.createElement("p");
+
+        if (score === 100) {
+
+            title.textContent =
+                "🏆 CASE SOLVED — MASTER DETECTIVE";
+
+            explanation.textContent =
+                "Correct! Rohan is the intended culprit. His issued maintenance card and USB device connect him to the server access and the exported file. His unverified alibi adds further suspicion.";
+
+        } else if (suspect === "rohan") {
+
+            title.textContent =
+                "🔍 CORRECT SUSPECT — EVIDENCE NEEDS WORK";
+
+            explanation.textContent =
+                "You identified Rohan correctly, but the strongest connection is the physical access card and USB device assigned to him.";
+
+        } else {
+
+            title.textContent =
+                "❌ CASE UNSOLVED";
+
+            explanation.textContent =
+                "Your accusation does not match the intended solution. Mira's credentials alone do not prove she used the computer, and Asha's exit is recorded. The strongest evidence connects Rohan's issued devices to the breach.";
+        }
+
+        points.textContent =
+            "DETECTIVE SCORE: " + score + "/100";
+
+        points.style.color = "#8de9bb";
+        points.style.fontWeight = "bold";
+
+        finalResult.append(
+            title,
+            explanation,
+            points
+        );
+
+        finalResult.classList.remove("hidden");
+
+        verdictSubmitted = true;
+
+        submitVerdict.disabled = true;
+
+        caseStatus.textContent =
+            score === 100 ? "SOLVED" : "CLOSED";
+
+        finalResult.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+
+    // RESTART GAME
+
+    resetBtn.addEventListener("click", () => {
+        window.location.reload();
+    });
+
+    console.log("CASE ZERO V2.0 READY");
+});
+</script>
+<script src="interrogation.js"></script>
+<script src="evidence-board.js"></script>
+<script src="case-finale.js"></script>
+
+</body>
+</html>
